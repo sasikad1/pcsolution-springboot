@@ -19,6 +19,8 @@ target/
 .DS_Store
 
 
+out/
+
 ### STS ###
 .apt_generated
 .classpath

@@ -102,6 +102,33 @@ Protects all routes except login and user registration.
 
 Tokens must be passed in Authorization headers for protected endpoints.
 
+## Authentication (JWT) ලොගික්
+
+- පළවෙනි වතාවට user එක login request එකක් යවන්නේ username සහ password සමඟයි.
+- Server එකට එන මේ request එක valid නම්, server එක user එකට **JWT token** එකක් generate කරලා return කරනවා.
+- මේ token එක **stateless** බවට පත්වෙයි, එහෙම කියන්නේ token එක client-side (browser) එකේ local storage එකේ හෝ session storage එකේ ගබඩා කරනවා.
+- JWT token එක expire වෙනව 24 hours (1 day) කාලයක් තුල.
+- user එක login වෙලා තියෙන අවස්ථාවේ, client එක request එකක් යවන්නෙත් ඒ token එක request header එකේ attach කරලා යවනවා.
+- Server එකට එන request එකක් ලැබුන විට, server එක එහි තිබෙන token එක **validate** කරනවා.
+- token එක valid නම්, request එක authorize කරලා user එකට access දෙනවා.
+- token එක expired නම්, user එකට නැවත login වෙන්න කියන response එකක් return කරනවා.
+
+---
+
+### Example Workflow
+
+1. User logs in with username & password.
+2. Server responds with JWT token (valid for 24h).
+3. Client stores JWT token in browser storage.
+4. Client sends API requests with JWT token in Authorization header.
+5. Server validates token on each request and grants access if valid.
+
+---
+
+**Note:**  
+මෙම ක්‍රමය `stateless` authentication එකක් නිසා, server එකට user session එකක් separately track කරන්න අවශ්‍ය නොවේ. All info is in the token itself.
+
+
 📁 Screenshots Folder
 All backend-related screenshots should be stored in the /screenshots folder.
 
